@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>TA and FA blocks</h1>
+{% if not items %}<p class="muted">No data yet. The feature step writes the TA and FA blocks per symbol.</p>{% endif %}
+{% for sym, it in items %}
+<div class="card"><strong>{{ sym }}</strong> <span class="muted">{{ it.as_of }}</span>
+<div class="scroll" tabindex="0" role="region" aria-label="{{ sym }} features"><table>
+<caption class="sr">Latest TA and FA features for {{ sym }}</caption>
+{% for k, val in it.f.items() if k.startswith('ta_') or k.startswith('fa_') %}<tr><th scope="row">{{ k }}</th><td>{{ val|num }}</td></tr>{% endfor %}
+</table></div></div>
+{% endfor %}
+{% endblock %}

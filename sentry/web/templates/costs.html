@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>LLM cost per day</h1>
+{% if not rows %}<p class="muted">No data yet. The agent step adds each call's cost to the day's total.</p>{% else %}
+<p class="muted">Cost is recorded per day, not per strategy version.</p>
+<div class="scroll" tabindex="0" role="region" aria-label="Cost table"><table><caption>Last 90 days</caption>
+<tr><th scope="col">Date</th><th scope="col">USD</th></tr>
+{% for r in rows %}<tr><th scope="row">{{ r.date }}</th><td>{{ r.usd|num(4) }}</td></tr>{% endfor %}</table></div>
+{% endif %}
+{% endblock %}

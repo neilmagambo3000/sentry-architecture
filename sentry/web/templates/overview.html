@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Overview</h1>
+{% if empty %}<p class="muted">No data yet. The engine writes this page's data on its first cycle.</p>{% else %}
+<ul class="strip" aria-label="Status">
+<li><b>Mode</b><span class="v">{% if dry_run %}DRY RUN{% else %}PAPER CLOCK{% endif %}</span>
+<div class="muted">{% if dry_run %}No broker-accepted order yet; days do not count{% else %}Running since {{ start }}{% endif %}</div></li>
+<li><b>Halt</b>{% if halts %}<span class="v warn">HALT</span>{% for h in halts %}<div class="warn">{{ h }}</div>{% endfor %}{% else %}<span class="v ok">None</span><div class="muted">Latest cycle</div>{% endif %}</li>
+<li><b>Reconcile</b>{% if reconcile_ok is none %}<span class="v muted">No data yet</span>{% elif reconcile_ok %}<span class="v ok">OK</span>{% else %}<span class="v warn">DIFF</span>{% endif %}</li>
+<li><b>Data freshness</b>{% if status.as_of is none %}<span class="v muted">No data yet</span>{% elif status.stale %}<span class="v warn">STALE</span><div class="muted">Snapshot {{ status.as_of }}</div>{% else %}<span class="v ok">Fresh</span><div class="muted">Snapshot {{ status.age_h|num(1) }} h old</div>{% endif %}</li>
+<li><b>LLM cost today</b>{% if status.cost is none %}<span class="v muted">No data yet</span>{% elif status.over %}<span class="v warn">OVER CEILING</span><div>${{ status.cost|num(2) }} of ${{ status.ceiling|num(2) }}</div>{% else %}<span class="v ok">Within ceiling</span><div>${{ status.cost|num(2) }} of ${{ status.ceiling|num(2) }}</div>{% endif %}</li>
+</ul>
+<div class="card">
+<div>Strategy version: <strong>{{ version }}</strong></div>
+<div>Broker equity: {% if equity %}<strong>{{ equity.equity|num(2) }}</strong> <span class="muted">at {{ equity.ts }}</span>{% else %}<span class="muted">No data yet</span>{% endif %}</div>
+</div>
+<h2>Sample under this version</h2>
+<div class="card">
+<div>Closed trades vs change floor: {{ trades }} / {{ floor_trades }}</div>
+<progress max="{{ floor_trades }}" value="{{ [trades, floor_trades]|min }}" aria-label="Closed trades vs change floor"></progress>
+<div>Trading days vs change floor: {{ days }} / {{ floor_days }}</div>
+<progress max="{{ floor_days }}" value="{{ [days, floor_days]|min }}" aria-label="Trading days vs change floor"></progress>
+<div>Closed trades vs review threshold: {{ trades }} / {{ review }}</div>
+<progress max="{{ review }}" value="{{ [trades, review]|min }}" aria-label="Closed trades vs review threshold"></progress>
+{% if not floor_met %}<p class="muted">Health only until the floor is met: no strategy changes, and no reading of the equity curve as evidence.</p>{% endif %}
+{% if floor_met and not review_met %}<p class="muted">Change floor met. Below the review threshold, no statement about edge is supported.</p>{% endif %}
+</div>
+{% endif %}
+{% endblock %}

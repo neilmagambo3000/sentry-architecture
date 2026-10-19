@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Forward IC</h1>
+{% if not signals %}<p class="muted">No data yet. The daily forward-IC job writes one row per signal and horizon.</p>{% else %}
+<div class="scroll" tabindex="0" role="region" aria-label="Forward IC table"><table>
+<caption>Run date {{ day }}. IC (n observations) by signal and horizon in days.</caption>
+<tr><th scope="col">Signal</th>{% for h in horizons %}<th scope="col">{{ h }} d</th>{% endfor %}</tr>
+{% for s in signals %}<tr><th scope="row">{{ s }}</th>{% for h in horizons %}{% set c = cells.get((s, h)) %}<td>{% if c %}{{ c.ic|num(3) }} <span class="muted">(n={{ c.n if c.n is not none else 'n/a' }})</span>{% else %}n/a{% endif %}</td>{% endfor %}</tr>{% endfor %}
+</table></div>
+<p class="muted">Informational only until the PLAN 2.5 thresholds are met: {{ need_days }} decision dates and {{ need_trades }} closed trades.</p>
+{% endif %}
+{% endblock %}

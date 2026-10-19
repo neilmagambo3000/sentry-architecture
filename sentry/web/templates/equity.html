@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Equity: broker and shadow baselines</h1>
+{% if not chart.lines %}<p class="muted">No data yet. Equity history is written at each reconcile and shadow equity by the daily shadow step.</p>{% else %}
+<p class="muted">Version {{ version }} only. Each line is indexed to its own first value = 100, so the shapes compare but the levels do not. Not evidence of edge before the sample floor on the Overview page is met.</p>
+<svg viewBox="0 0 {{ chart.w }} {{ chart.h }}" role="img" aria-labelledby="eq-t eq-d">
+<title id="eq-t">Equity lines indexed to 100</title>
+<desc id="eq-d">{{ chart.lines|length }} lines from {{ chart.dates[0] }} to {{ chart.dates[-1] }}, index range {{ chart.lo|num(1) }} to {{ chart.hi|num(1) }}. The table below lists each line.</desc>
+{% for l in chart.lines %}<polyline class="{{ l.cls }}" points="{{ l.points }}"/>{% endfor %}
+</svg>
+<p class="key" aria-hidden="true">{% for l in chart.lines %}<span><svg viewBox="0 0 30 10"><line class="{{ l.cls }}" x1="0" y1="5" x2="30" y2="5" stroke-width="3"/></svg>{{ l.name }}</span> {% endfor %}</p>
+<div class="scroll" tabindex="0" role="region" aria-label="Equity line summary"><table>
+<caption>Chart data summary (index, first value = 100)</caption>
+<tr><th scope="col">Line</th><th scope="col">From</th><th scope="col">To</th><th scope="col">Points</th><th scope="col">Last index</th></tr>
+{% for l in chart.lines %}<tr><th scope="row">{{ l.name }}</th><td>{{ l.first }}</td><td>{{ l.last }}</td><td>{{ l.n }}</td><td>{{ l.end|num(1) }}</td></tr>{% endfor %}
+</table></div>
+{% endif %}
+{% endblock %}

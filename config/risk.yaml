@@ -1,0 +1,12 @@
+# Hard limits checked by the risk gate. Part of strategy_hash.
+# Round illustrative values for the public snapshot, not the values used privately.
+max_weight: 0.20
+max_gross: 0.80
+daily_dd_halt: 0.05
+total_dd_halt: 0.20
+earnings_blackout_days: 2
+llm_daily_usd: 5.0
+stale_after_hours: 24.0
+# Alpaca rejects fractional short sales and orders are fractional, so negative targets are
+# reduced to 0 by the risk gate. Part of strategy_hash.
+long_only: true

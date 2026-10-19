@@ -1,0 +1,2 @@
+bps_per_side: 5.0     # checked against realised paper slippage, not assumed
+spread_proxy_bps: 0.0

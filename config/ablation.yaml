@@ -1,0 +1,4 @@
+# Ablation arms. Turning one on is a version bump.
+debate_rounds: "0"
+escalate: "off"
+trader: "off"

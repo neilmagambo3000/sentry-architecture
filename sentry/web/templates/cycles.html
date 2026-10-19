@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Cycle health</h1>
+{% if not rows %}<p class="muted">No data yet. The engine writes one row per step each cycle.</p>{% else %}
+<div class="scroll" tabindex="0" role="region" aria-label="Cycle health table"><table><caption>Latest 200 step results</caption>
+<tr><th scope="col">Cycle</th><th scope="col">Step</th><th scope="col">Status</th><th scope="col">Detail</th></tr>
+{% for r in rows %}<tr><td>{{ r.cycle_ts }}</td><td>{{ r.step }}</td><td>{% if r.status in ('error', 'halt', 'diff') %}<span class="warn"><strong>{{ r.status|upper }}</strong></span>{% else %}{{ r.status }}{% endif %}</td><td>{{ r.detail or '' }}</td></tr>{% endfor %}
+</table></div>
+{% endif %}
+{% endblock %}

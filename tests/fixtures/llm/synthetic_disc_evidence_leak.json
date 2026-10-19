@@ -1,0 +1,29 @@
+{
+  "synthetic": true,
+  "note": "SYNTHETIC: hand-written in the recorded response shape, not captured from the API",
+  "stop_reason": "end_turn",
+  "usage": {
+    "input_tokens": 900,
+    "cache_creation_input_tokens": 2100,
+    "cache_read_input_tokens": 0,
+    "output_tokens": 180
+  },
+  "parsed_output": {
+    "direction": 1,
+    "confidence": 0.6,
+    "horizon_days": 5,
+    "key_drivers": [
+      "Guidance raised",
+      "Uptrend intact"
+    ],
+    "invalidators": [
+      "Guidance cut"
+    ],
+    "event_risk": "none",
+    "rationale": "Fresh guidance raise agrees with the uptrend.",
+    "evidence_ids": [
+      "a1",
+      "not-visible-99"
+    ]
+  }
+}

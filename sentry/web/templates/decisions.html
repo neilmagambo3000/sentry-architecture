@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Decisions per day</h1>
+{% if not rows %}<p class="muted">No data yet. The daily decision step writes one row per symbol.</p>{% else %}
+<form method="get"><input type="hidden" name="v" value="{{ version }}">
+<label>Day <select name="day">{% for d in days %}<option {% if d == day %}selected{% endif %}>{{ d }}</option>{% endfor %}</select></label> <button>Show</button></form>
+<div class="scroll" tabindex="0" role="region" aria-label="Decisions table"><table>
+<caption>Decisions for {{ day }}</caption>
+<tr><th scope="col">Symbol</th><th scope="col">Dir</th><th scope="col">Weight</th><th scope="col">Stop</th><th scope="col">Score</th><th scope="col">Disc dir</th><th scope="col">Disc conf</th><th scope="col">Disagree</th><th scope="col">Gate</th></tr>
+{% for x in rows %}<tr><th scope="row">{{ x.r.symbol }}</th><td>{{ x.r.direction|num }}</td><td>{{ x.r.target_weight|num }}</td><td>{{ x.r.stop|num(2) }}</td><td>{{ x.r.score|num }}</td>
+<td>{{ x.f.get('disc_direction')|num }}</td><td>{{ x.f.get('disc_confidence')|num }}</td><td>{{ x.f.get('disagreement')|num }}</td><td>{{ x.f.get('gate_reason')|num }}</td></tr>{% endfor %}
+</table></div>
+{% endif %}
+{% endblock %}

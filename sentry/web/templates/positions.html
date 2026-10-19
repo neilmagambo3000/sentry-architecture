@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Positions</h1>
+{% if not rows %}<p class="muted">No data yet. The reconcile step writes a position snapshot each cycle.</p>{% else %}
+<div class="scroll" tabindex="0" role="region" aria-label="Positions table"><table>
+<caption>Snapshot {{ ts }}</caption>
+<tr><th scope="col">Symbol</th><th scope="col">Qty</th><th scope="col">Avg entry</th><th scope="col">Market value</th><th scope="col">Equity</th></tr>
+{% for r in rows %}<tr><th scope="row">{{ r.symbol }}</th><td>{{ r.qty|num(4) }}</td><td>{{ r.avg_entry_price|num(2) }}</td><td>{{ r.market_value|num(2) }}</td><td>{{ r.equity|num(2) }}</td></tr>{% endfor %}
+</table></div>
+{% endif %}
+{% endblock %}

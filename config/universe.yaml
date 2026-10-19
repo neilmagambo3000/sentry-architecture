@@ -1,0 +1,5 @@
+# As-of symbol universe. Part of strategy_hash. Empty in the public snapshot:
+# the selection rule and the symbol list are not published.
+as_of: null
+selection_rule: not published
+symbols: []

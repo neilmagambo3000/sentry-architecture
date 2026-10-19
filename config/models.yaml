@@ -1,0 +1,19 @@
+# Pinned model for the discretionary agent. Changing anything here
+# changes prompt_hash and therefore strategy_hash: a version bump.
+model_id: claude-sonnet-5
+# Vendor-stated training cutoff C. Rows with as_of < cutoff are flagged contaminated_for_layer_b.
+# The live loop refuses to start while it is null.
+cutoff: null
+# Sonnet 5 rejects non-default sampling params and anthropic SDK 1.x has no
+# `temperature` argument, so temperature is NOT sent; this records the model
+# default for the prompt hash and audit trail only.
+temperature: 1.0
+effort: low
+max_tokens: 1024
+escalate_model_id: claude-opus-5   # ablation arm only, off by default
+# USD per million tokens, used for the cost ceiling estimate and logging.
+price_per_mtok:
+  input: 2.00
+  output: 10.00
+  cache_write: 2.50
+  cache_read: 0.20

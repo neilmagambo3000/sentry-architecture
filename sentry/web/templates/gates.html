@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Gate reasons</h1>
+{% if not counts %}<p class="muted">No data yet. The feature step records a gate reason per row.</p>{% else %}
+<div class="scroll" tabindex="0" role="region" aria-label="Gate reasons table"><table><caption>Feature rows by gate reason</caption>
+<tr><th scope="col">Reason</th><th scope="col">Rows</th></tr>
+{% for k, n in counts %}<tr><th scope="row">{{ k }}</th><td>{{ n }}</td></tr>{% endfor %}</table></div>
+{% endif %}
+{% endblock %}

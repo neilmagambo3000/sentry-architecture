@@ -1,0 +1,4 @@
+# Point-in-time news visibility. Covered by prompt_hash and strategy_hash.
+# Illustrative values for the public snapshot.
+news_lag_minutes: 30
+news_window_days: 5

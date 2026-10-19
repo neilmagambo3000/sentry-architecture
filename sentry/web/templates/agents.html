@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block body %}
+<h1>Agent views</h1>
+<form method="get"><input type="hidden" name="v" value="{{ version }}">
+<label>Symbol <input name="symbol" value="{{ symbol }}" size="8"></label> <button>Filter</button></form>
+{% if not rows %}<p class="muted">No data yet. The agent step records each LLM call and its view.</p>{% endif %}
+{% for x in rows %}
+<div class="card">
+<strong>{{ x.r.symbol }}</strong> <span class="muted">{{ x.r.as_of }} / {{ x.r.agent }} / cost ${{ x.r.cost_usd|num(4) }}</span>
+{% if x.r.error %}<div class="warn"><strong>ERROR</strong> {{ x.r.error }}</div>{% endif %}
+{% if x.v %}
+<div>Direction {{ x.v.get('direction')|num }}, confidence {{ x.v.get('confidence')|num }}, horizon {{ x.v.get('horizon_days')|num }} days</div>
+<div>{{ x.v.get('rationale') }}</div>
+<div class="muted">Evidence ids: {{ (x.v.get('evidence_ids') or [])|join(', ') or 'none' }}</div>
+{% endif %}
+</div>
+{% endfor %}
+{% endblock %}
